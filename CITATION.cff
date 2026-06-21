@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: "t3d — DDD + TDD harness for Claude Code"
+message: "If you reference this plugin in academic work or technical writing, please cite it."
+type: software
+authors:
+  - name: "coolsocket"
+    website: "https://github.com/coolsocket"
+repository-code: "https://github.com/coolsocket/t3d"
+url: "https://github.com/coolsocket/t3d"
+abstract: >-
+  A small Claude Code plugin (5 hooks, 4 skills, project templates) that
+  enforces Domain-Driven Design bounded-context discipline and Test-Driven
+  Development red-green-refactor at edit time. The hooks reject edits that
+  import external frameworks into Domain layers or cross context boundaries
+  without going through the allowed application.api channel; the Stop hook
+  blocks session exit if Domain code was edited but tests are red.
+keywords:
+  - claude-code
+  - domain-driven-design
+  - test-driven-development
+  - developer-tools
+  - ai-coding
+  - architecture-enforcement
+license: MIT
+version: "0.3.2"
+date-released: "2026-06-21"

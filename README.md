@@ -4,13 +4,14 @@
 
 **TDD + 3D — a small Claude Code plugin that gives any Python project DDD-shaped guardrails and a red-green-refactor pulse.**
 
-[![Version 0.3.2](https://img.shields.io/badge/version-0.3.2-purple.svg)](./.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/github/v/release/coolsocket/t3d?label=version&color=purple)](https://github.com/coolsocket/t3d/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Hooks: 5](https://img.shields.io/badge/hooks-5-orange.svg)](./hooks/)
 [![Skills: 4](https://img.shields.io/badge/skills-4-green.svg)](./skills/)
 [![CI](https://github.com/coolsocket/t3d/actions/workflows/validate.yml/badge.svg)](https://github.com/coolsocket/t3d/actions/workflows/validate.yml)
+[![GitHub stars](https://img.shields.io/github/stars/coolsocket/t3d?style=flat&color=yellow)](https://github.com/coolsocket/t3d/stargazers)
 
-🚀 [Install](#-install) · 🔧 [Daily workflow](#-daily-workflow) · 🪝 [Hooks](#-hooks) · 🧠 [Skills](#-skills) · 🗂️ [Templates](#-templates) · 🩺 [Troubleshooting](#-troubleshooting)
+🚀 [Install](#-install) · 🔧 [Daily workflow](#-daily-workflow) · 🪝 [Hooks](#-hooks) · 🧠 [Skills](#-skills) · 🗂️ [Templates](#-templates) · 🩺 [Troubleshooting](#-troubleshooting) · ❓ [FAQ](#-faq)
 
 </div>
 
@@ -123,6 +124,53 @@ templates/
 ## 🧪 Why "t3d"?
 
 **T**DD + **3D** (DDD in leet). Three letters, two methodologies, one harness. Short enough to type, distinct enough to grep.
+
+---
+
+## ❓ FAQ
+
+### What is t3d?
+
+t3d is a Claude Code plugin that adds DDD + TDD guardrails to Python projects. It ships 5 shell hooks that fire on Edit / Write / Bash / Stop events and reject edits that violate bounded-context layering or skip the red-green-refactor cycle.
+
+### How is t3d different from a linter or a pre-commit hook?
+
+Linters and pre-commit hooks run **after** the code is written. t3d's PreToolUse hooks run **before** the edit is applied — Claude sees the rejection reason in the same turn and retries with a compliant version. The bad code never lands.
+
+### Does t3d work for non-Python projects?
+
+The hook regex in `check-domain-purity.sh` is Python-specific (matches `import fastapi`-style statements). Forking for TypeScript, Go, or Rust is straightforward — swap that one regex. See [discussion #2](https://github.com/coolsocket/t3d/discussions/2) for sketches.
+
+### Will t3d slow Claude Code down?
+
+No. Each hook is one `bash` exec + `jq` parse — about 5 ms. The Stop hook is a `test -f` check, sub-millisecond. Hooks on non-t3d projects path-match `contexts/**` and pass silently.
+
+### Do I need to install t3d in every project?
+
+No. Install once at user scope (`/plugin install t3d`) and it's available everywhere. Run `/t3d-init` only in projects where you want the DDD templates copied.
+
+### Does t3d make any network calls?
+
+Only during install (`gh` clones the repo via GitHub). At runtime the hooks are local-only — no telemetry, no phone-home. State files live under `${CLAUDE_PROJECT_DIR}/.claude/state/`.
+
+### How do I uninstall?
+
+```
+/plugin uninstall t3d
+/plugin marketplace remove t3d
+```
+
+Templates already copied into your projects stay; delete them manually if you want.
+
+### What does "t3d" stand for?
+
+**T**DD + **3D** (DDD in leet). Three letters, two methodologies.
+
+---
+
+## 🌟 Star history
+
+[![Star History Chart](https://api.star-history.com/svg?repos=coolsocket/t3d&type=Date)](https://www.star-history.com/#coolsocket/t3d&Date)
 
 ---
 
