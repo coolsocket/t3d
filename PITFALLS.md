@@ -80,6 +80,30 @@ claude plugin install <plugin>
 
 - _Source: session 1763c182…, 2026-06-18_
 
+### Plugin 源 / 路径迁移后，活着的 Claude session 还报老路径错
+
+切换 plugin source（如 `local dir` → `github.com/owner/repo`）或者把 plugin
+文件夹搬家后，**当前正在运行的 Claude session 会继续报旧路径**：
+```
+Plugin directory does not exist: /old/path/to/plugin
+(plugin@old-marketplace — run /plugin to reinstall)
+```
+原因：plugin 注册表是在 session **启动时** 加载进内存的，运行中不会重读 disk。
+即使你 `claude plugin marketplace remove / add` 把 disk 的 settings.json 改干净了，
+当前 session 仍在用快照状态。
+
+**永久修复**：退出 Claude session 再重开（新 session 读取新 settings）。
+
+**当前 session 救急**（如果你不想中断）：用 symlink 把旧路径指到新路径：
+```bash
+ln -snf /new/path/to/plugin /old/path/to/plugin
+ln -snf ~/.claude/plugins/cache/<new-marketplace>/<plugin>/<ver> \
+        ~/.claude/plugins/cache/<old-marketplace>/<plugin>/<ver>
+```
+重启后 symlink 不再被引用，可删可留。
+
+- _Source: session 1763c182…, 2026-06-21（在把 t3d 从 tddd-marketplace 迁到 coolsocket/t3d 时栽了两次）_
+
 ---
 
 ## DDD / TDD 实践
