@@ -1,0 +1,52 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: plugin + hooks + skills
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: JSON manifests
+        run: |
+          jq -e . .claude-plugin/plugin.json
+          jq -e . .claude-plugin/marketplace.json
+          jq -e . hooks/hooks.json
+
+      - name: Hook scripts — executable + parse cleanly
+        run: |
+          for sh in hooks/*.sh; do
+            test -x "$sh"   || { echo "✗ not executable: $sh"; exit 1; }
+            bash -n "$sh"   || { echo "✗ syntax error: $sh"; exit 1; }
+          done
+          echo "✓ all hooks ok"
+
+      - name: SKILL.md frontmatter present + non-empty fields
+        run: |
+          for s in skills/*/SKILL.md; do
+            head -1 "$s" | grep -q '^---$' || { echo "✗ missing frontmatter: $s"; exit 1; }
+            head -8 "$s" | grep -qE '^name:\s+\S' || { echo "✗ missing name: $s"; exit 1; }
+            head -8 "$s" | grep -qE '^description:' || { echo "✗ missing description: $s"; exit 1; }
+          done
+          echo "✓ all skills ok"
+
+      - name: Versions in plugin.json and marketplace.json agree
+        run: |
+          PV=$(jq -r .version .claude-plugin/plugin.json)
+          MV=$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)
+          if [ "$PV" != "$MV" ]; then
+            echo "✗ version mismatch: plugin.json=$PV marketplace.json=$MV"
+            exit 1
+          fi
+          echo "✓ version: $PV"

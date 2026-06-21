@@ -1,0 +1,9 @@
+# Auto-detect text + normalize EOL to LF
+* text=auto eol=lf
+
+# Shell scripts MUST be LF (CRLF breaks bash)
+*.sh text eol=lf
+hooks/* text eol=lf
+
+# Mark generated/vendored so they don't dominate language stats
+templates/** linguist-vendored=true

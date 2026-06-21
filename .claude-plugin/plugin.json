@@ -1,0 +1,11 @@
+{
+  "name": "t3d",
+  "version": "0.3.2",
+  "description": "DDD + TDD harness for Claude Code: bounded-context layout, layer-purity hooks, red-green-refactor enforcement, project templates, a periodic drift-audit skill (t3d-sinkin) that mines past session logs (capped to 2-3 deduped pitfalls + workflows per run, with gap analysis), and a starter PITFALLS.md. 0.3.2: fixed sinkin 1b CLAUDE.md-path regex false positive.",
+  "author": {
+    "name": "tddd-harness contributors"
+  },
+  "license": "MIT",
+  "keywords": ["ddd", "tdd", "harness", "bounded-context", "hooks", "skills"],
+  "homepage": "https://github.com/your-org/tddd"
+}

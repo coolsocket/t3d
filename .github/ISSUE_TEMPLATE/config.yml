@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion / question
+    url: https://github.com/coolsocket/t3d/discussions
+    about: For open-ended questions or "how do I..." — please don't open an issue.

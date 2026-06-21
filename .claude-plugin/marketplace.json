@@ -1,0 +1,17 @@
+{
+  "name": "t3d",
+  "owner": {
+    "name": "coolsocket"
+  },
+  "description": "Marketplace for the t3d Claude Code plugin — a small DDD + TDD harness (hooks, layer rules, project templates, drift-audit skill).",
+  "plugins": [
+    {
+      "name": "t3d",
+      "source": ".",
+      "description": "DDD + TDD harness: bounded-context layout, layer-purity hooks, red-green-refactor enforcement, project templates, periodic drift-audit + session-log mining (t3d-sinkin), plus a starter PITFALLS.md.",
+      "version": "0.3.2",
+      "category": "development-workflow",
+      "tags": ["ddd", "tdd", "python", "harness", "bounded-context", "audit"]
+    }
+  ]
+}

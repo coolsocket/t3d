@@ -1,0 +1,42 @@
+name: 🐛 Bug report
+description: A hook misfires, a skill behaves wrong, a template is broken, etc.
+title: "[bug] "
+labels: ["bug", "triage"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - "hook (which one?)"
+        - "skill (which one?)"
+        - "template (which file?)"
+        - "marketplace / plugin manifest"
+        - "docs"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimum reproduction
+      description: Exact commands / JSON event / file edit that triggers it.
+      placeholder: |
+        1. `/t3d-init` in a fresh dir
+        2. Try to write `contexts/foo/domain/x.py` with `import fastapi`
+        3. Hook is supposed to DENY but allows
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      render: shell
+      description: Output of `claude --version`, `bash --version`, `jq --version`, OS.

@@ -1,0 +1,37 @@
+name: ✨ Feature request
+description: A new skill, hook, template, or behavior.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - "new skill"
+        - "new hook"
+        - "new layer rule"
+        - "new template file"
+        - "PITFALLS.md entry"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What concrete pain or workflow does this solve? Who feels it?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed shape
+      description: Slash command name, hook trigger + action, file name + content sketch.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

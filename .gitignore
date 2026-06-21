@@ -1,0 +1,15 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Local Claude Code per-session state — never commit
+.claude/state/
+.claude/settings.local.json
+
+# Scratch
+scratch/
+tmp/
